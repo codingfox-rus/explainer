@@ -20,6 +20,7 @@ $config = [
     'components' => [
         'assetManager' => [
             'class' => AssetManager::class,
+            'forceCopy' => true,
             //'appendTimestamp' => true,
         ],
         'authManager' => [

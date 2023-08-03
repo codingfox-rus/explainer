@@ -63,6 +63,13 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+    
+    public function actionParse()
+    {
+        $query = Yii::$app->request->post('query');
+        
+        return $query;
+    }        
 
     /**
      * Login action.
