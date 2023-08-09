@@ -7,11 +7,12 @@ $(function(){
         $.ajax({
             type: form.attr('method'),
             url: form.attr('action'),
+            dataType: 'json',
             data: {
                 query: form.find('#query').val()
             }
         }).done(function (data) {
-            $('#query-result').text(data);
+            $('#query-result').html(data.html);
         });
         
         return false;

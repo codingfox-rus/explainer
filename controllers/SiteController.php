@@ -2,13 +2,14 @@
 
 namespace app\controllers;
 
+use app\dto\ExplainDTO;
+use app\models\ContactForm;
+use app\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -68,7 +69,22 @@ class SiteController extends Controller
     {
         $query = Yii::$app->request->post('query');
         
-        return $query;
+        $explainData = [];
+        $rawData = Yii::$app->db
+            ->createCommand('explain select * from actor')
+            ->queryAll();
+        foreach ($rawData as $row) {
+            $explainData[] = new ExplainDTO($row);
+        }
+        
+        $response['html'] = $this->renderPartial(
+            '../_partials/explain',
+            ['explainData' => $explainData]
+        );
+        
+        $this->response->format = Response::FORMAT_JSON;
+        
+        return $response;
     }        
 
     /**
