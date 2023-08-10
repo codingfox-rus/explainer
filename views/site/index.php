@@ -21,7 +21,13 @@ $this->title = 'IndexFinder';
         </div>
         
         <div class="form-group">
-            <?= Html::submitButton('Погнали', ['class' => 'btn btn-primary']) ?>
+            <div class="d-inline">
+                <?= Html::submitButton('Погнали', ['class' => 'btn btn-primary']) ?>
+            </div>
+            <div class="spinner-border d-none" role="status">
+                <br>
+                <span class="sr-only"></span>
+            </div>
         </div>
         
         <?php ActiveForm::end() ?>

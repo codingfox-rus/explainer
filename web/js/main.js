@@ -3,6 +3,8 @@ $(function(){
         e.preventDefault();
         
         const form = $(this);
+        const spinner = form.find('.spinner-border');
+        spinner.removeClass('d-none');
         
         $.ajax({
             type: form.attr('method'),
@@ -13,6 +15,7 @@ $(function(){
             }
         }).done(function (data) {
             $('#query-result').html(data.html);
+            spinner.addClass('d-none');
         });
         
         return false;

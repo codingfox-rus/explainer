@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\dto\ExplainDTO;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\components\Parser;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -68,6 +69,8 @@ class SiteController extends Controller
     public function actionParse()
     {
         $query = Yii::$app->request->post('query');
+        /** @var Parser */
+        $parser = Yii::$app->parser;
         
         $explainData = [];
         $rawData = Yii::$app->db

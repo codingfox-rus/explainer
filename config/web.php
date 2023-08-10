@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Parser;
 use yii\rbac\DbManager;
 use yii\symfonymailer\Mailer;
 use yii\web\AssetManager;
@@ -62,6 +63,9 @@ $config = [
             'rules' => [
                 '' => 'site/index',
             ],
+        ],
+        'parser' => [
+            'class' => Parser::class,
         ],
     ],
     'params' => $params,
