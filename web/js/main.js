@@ -14,7 +14,8 @@ $(function(){
                 query: form.find('#query').val()
             }
         }).done(function (data) {
-            $('#query-result').html(data.html);
+            $('#stat').html('Время выполнения запроса: <strong>' + data.stat + '</strong>');
+            $('#explain-result').html(data.html);
             spinner.addClass('d-none');
         });
         

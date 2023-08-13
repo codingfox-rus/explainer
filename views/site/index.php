@@ -32,7 +32,11 @@ $this->title = 'IndexFinder';
         
         <?php ActiveForm::end() ?>
     </div>
-    <div id="query-result">
+    <div id="stat" class="bg-body-tertiary">
+        
+    </div>
+    <br>
+    <div id="explain-result">
         
     </div>
 </div>

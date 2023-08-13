@@ -73,13 +73,23 @@ class SiteController extends Controller
         $parser = Yii::$app->parser;
         
         $explainData = [];
+        
+        Yii::$app->db->createCommand('set profiling = 1')->execute();
+        
         $rawData = Yii::$app->db
             ->createCommand('explain select * from actor')
             ->queryAll();
+        
+        $statData = Yii::$app->db->createCommand('show profiles')->queryOne();
+        $duration = $statData['Duration'];
+        
+        Yii::$app->db->createCommand('set profiling = 0')->execute();
+        
         foreach ($rawData as $row) {
             $explainData[] = new ExplainDTO($row);
         }
         
+        $response['stat'] = $duration;
         $response['html'] = $this->renderPartial(
             '../_partials/explain',
             ['explainData' => $explainData]
