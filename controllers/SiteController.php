@@ -2,9 +2,9 @@
 
 namespace app\controllers;
 
-use app\dto\ExplainDTO;
 use app\models\ContactForm;
 use app\models\LoginForm;
+use app\components\Stat;
 use app\components\Parser;
 use Yii;
 use yii\filters\AccessControl;
@@ -69,36 +69,28 @@ class SiteController extends Controller
     public function actionParse()
     {
         $query = Yii::$app->request->post('query');
+        /** @var Stat */
+        $stat = Yii::$app->stat;
         /** @var Parser */
         $parser = Yii::$app->parser;
         
-        $explainData = [];
+        $profileDto = $stat->explain($query);
+        $computedData = $parser->compute($query);
         
-        Yii::$app->db->createCommand('set profiling = 1')->execute();
-        
-        $rawData = Yii::$app->db
-            ->createCommand('explain select * from actor')
-            ->queryAll();
-        
-        $statData = Yii::$app->db->createCommand('show profiles')->queryOne();
-        $duration = $statData['Duration'];
-        
-        Yii::$app->db->createCommand('set profiling = 0')->execute();
-        
-        foreach ($rawData as $row) {
-            $explainData[] = new ExplainDTO($row);
-        }
-        
-        $response['stat'] = $duration;
+        $response['stat'] = $profileDto->duration;
         $response['html'] = $this->renderPartial(
             '../_partials/explain',
-            ['explainData' => $explainData]
+            [
+                'explainData' => $profileDto->explainData,
+                'computedData' => $computedData,
+            ]
         );
         
         $this->response->format = Response::FORMAT_JSON;
         
         return $response;
-    }        
+    }
+    
 
     /**
      * Login action.

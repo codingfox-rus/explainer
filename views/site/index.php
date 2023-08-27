@@ -15,8 +15,12 @@ $this->title = 'IndexFinder';
             ]); 
         ?>
         
+        <div>
+            <h4>Введите запрос</h4>
+            <p><strong>Например:</strong> SELECT * FROM actor WHERE first_name = 'PENELOPE';</p>
+        </div>
+        
         <div class="form-group">
-            <label for="query">Введите запрос:</label>
             <textarea class="form-control" rows="15" id="query" name="query"></textarea>
         </div>
         
